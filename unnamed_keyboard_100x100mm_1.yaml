@@ -1,0 +1,121 @@
+meta:
+  engine: 4.1.0
+points:
+  zones:
+    matrix:
+      key:
+        padding: U
+        spread: U
+      anchor:
+        shift: [210,-150]
+        rotate: 12
+      columns:
+        inner:
+        index:
+          key:
+            stagger: 0.15U
+            col_net: P1
+        middle:
+          key.stagger: 0.25U
+        ring:
+          key:
+            stagger: -0.25U
+            splay: -5
+        pinky:
+          key:
+            stagger: -0.66U
+            splay: -7
+            spread: 18.5
+      rows:
+        bottom:
+        middle:
+        top:
+    thumb:
+      anchor:
+        ref: matrix_index_bottom
+        shift: [-1.6U, -1.6U]
+        rotate: 30
+      columns:
+        thumb_far:
+          key:
+            name: thumb_far
+        thumb_home:
+          key:
+            spread: cx
+            splay: -15
+            origin: [-0.5U, -0.5U]
+            name: thumb_home
+outlines:
+  limits:
+    - what: rectangle
+      where: matrix_index_middle
+      size: [100,100]
+      adjust:
+        shift: [17,-19]
+        rotate: -12
+  switches:
+    - what: rectangle
+      where: true
+      size: [14,14]
+  stack:
+    - name: limits
+    - operation: stack
+      name: switches
+pcbs:
+  main:
+    outlines:
+      main:
+        outline: limits
+    template: kicad8
+    footprints:
+      mxkeys:
+        what: ceoloide/switch_mx
+        where: true
+        params:
+          from: "{{column_net}}"
+          to: "{{colrow}}"
+          reversible: true
+          include_keycap: true
+        adjust:
+          rotate: 0
+      chockeys:
+        what: ceoloide/switch_choc_v1_v2
+        where: true
+        params:
+          from: "{{column_net}}"
+          to: "{{colrow}}"
+          reversible: true
+        adjust:
+          rotate: 180
+#      glpkeys:
+#        what: ceoloide/switch_gateron_ks27_ks33
+#        where: true
+#        params: 
+#          from: "undefined"
+#          to: "undefined"
+#          reversible: true
+      ec11:
+        what: ceoloide/rotary_encoder_ec11_ec12
+        where: thumb_home
+        adjust:
+          shift: [2U,-.2U]
+          rotate: -27
+      diode:
+        what: diode
+        where: true
+        params:
+          from: "{{colrow}}"
+          to: "{{row_net}}"
+        adjust:
+          shift: [0, -5]
+      mcu:
+        what: ceoloide/mcu_nice_nano
+        where:
+          - ref: matrix_pinky_bottom
+            shift: [-.4U, -1.4U]
+        params:
+          reversible: true
+          only_required_jumpers: true
+        adjust:
+          shift: [0, 0]
+          rotate: -90
