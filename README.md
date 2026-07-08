@@ -1,2 +1,2 @@
 # nstarprototypes
-repo my prototypes
+repo of my prototypes
